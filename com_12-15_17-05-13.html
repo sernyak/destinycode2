@@ -1788,7 +1788,7 @@
                             const degree = Math.floor(fullDegree);
                             const minutesRaw = (fullDegree - degree) * 60;
                             const minutes = Math.floor(minutesRaw);
-                            const seconds = Math.round((minutesRaw - minute) * 60);
+                            const seconds = Math.round((minutesRaw - minutes) * 60);
 
                             return `
                                 <div class="astro-data-item">
