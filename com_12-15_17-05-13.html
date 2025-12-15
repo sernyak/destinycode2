@@ -1765,7 +1765,7 @@
                             const degree = Math.floor(fullDegree);
                             const minutesRaw = (fullDegree - degree) * 60;
                             const minute = Math.floor(minutesRaw);
-                            const seconds = Math.round((minutesRaw - minute) * 60);
+                            const seconds = Math.round((minutesRaw - minutes) * 60);
 
                             const label = key.charAt(0).toUpperCase() + key.slice(1);
                             pdfPlanetsList.push(`${label}:${sign} ${degree}° ${minute}' ${seconds}"`);
