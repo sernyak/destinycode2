@@ -2483,11 +2483,69 @@
                 } catch (parseError) {
                     console.error("JSON Parse Error:", parseError, "Raw:", rawJsonString);
                     formattedReportHTML = `<p class="text-red-400">Нажаль, сталася помилка при формуванні звіту. Спробуйте пізніше.</p>`;
-                    generatedReportData = formattedReportHTML;
-                    isReportReady = true;
-                    showReportIfReady();
+                }
+
+                // === ЛОГІКА, ЯКУ Я ПРОПУСТИВ МИНУЛОГО РАЗУ (З файлу com_...) ===
+                
+                const astroHtml = generateAstroDataHTML();
+                generatedReportData = formattedReportHTML + astroHtml;
+                console.log("Sync: Report FINISHED.");
+                isReportReady = true;
+                showReportIfReady();
+
+                try {
+                    const reportTitleMatch = formattedReportHTML.match(/<h2.*?>(.*?)<\/h2>/i);
+                    const reportTitle = reportTitleMatch ?
+                        reportTitleMatch[1].replace(/<.*?>/g, '').trim().replace(/^[^\w]+/, '') :
+                        'Ваш звіт';
+
+                    const emailResponse = await fetch(EMAIL_BACKEND_URL, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            userEmail: email,
+                            reportHtml: formattedReportHTML,
+                            reportTitle: reportTitle,
+                            reportType: 'main',
+                            userData: userBirthData
+                        })
+                    });
+
+                    if (!emailResponse.ok) throw new Error('Backend failed to send email.');
+                    const emailResult = await emailResponse.json();
+
+                } catch (error) {
+                    console.error("Failed to send email via backend:", error);
                 }
             }
+
+            function updateTimePlaceholder() {
+                if (birthTimeInput.value === '') {
+                    timePlaceholder.innerText = 'Обери час';
+                    timePlaceholder.style.color = 'var(--secondary-text-color)';
+                } else {
+                    timePlaceholder.innerText = birthTimeInput.value;
+                    timePlaceholder.style.color = 'var(--primary-text-color)';
+                }
+            }
+
+            // Listeners from attached file
+            birthTimeInput.addEventListener('input', updateTimePlaceholder);
+            birthTimeInput.addEventListener('change', updateTimePlaceholder);
+            birthTimeInput.addEventListener('blur', updateTimePlaceholder);
+            birthTimeInput.addEventListener('touchend', () => setTimeout(updateTimePlaceholder, 500));
+            
+            updateTimePlaceholder();
+
+            birthCityInput.addEventListener('input', () => {
+                cityErrorMessage.style.display = 'none';
+                cityInfoMessage.style.display = 'none';
+                birthCityInput.classList.remove('input-error');
+            });
+
+            handlePaymentReturn();
         });
     </script>
 </body>
