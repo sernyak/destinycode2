@@ -704,18 +704,17 @@
                 </p>
             </div>
             <form id="birth-form" class="w-full space-y-4">
-                <!-- 🔥 FIX: Покращена структура інпуту дати (З Референсу) -->
-                <div class="input-field h-14 flex items-center justify-center relative cursor-pointer px-12 transition-colors hover:border-[#cda45e]">
-                    <svg class="w-6 h-6 absolute left-4 top-1/2 -translate-y-1/2" style="color: var(--accent-color);" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M9 11.24V7.5C9 6.12 10.12 5 11.5 5S14 6.12 14 7.5v3.74c1.21-.81 2-2.18 2-3.74C16 5.01 13.99 3 11.5 3S7 5.01 7 7.5c0 1.56.79 2.93 2 3.74zm9.84 4.63l-4.54-2.26c-.17-.07-.35-.11-.54-.11H13v-6c0-.83-.67-1.5-1.5-1.5S10 6.67 10 7.5v10.74l-3.43-.72c-.28-.06-.57 0-.84.18l-.24.17c-.27.2-.35.59-.16.89l2.65 4.14c.44.69 1.19 1.1 1.99 1.1h6.5c1.45 0 2.56-1.25 2.45-2.69l-.32-3.92c-.08-.94-.78-1.68-1.66-1.92z" />
-                    </svg>
+                <!-- 🔥 FIX STEP 1: Повертаємо правильний Date Input + z-10 для надійності -->
+                <div class="input-field h-14 flex items-center justify-center relative hover:border-[#cda45e] transition-colors">
                     <svg class="w-5 h-5 absolute right-4 top-1/2 -translate-y-1/2" style="color: var(--secondary-text-color);" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                     </svg>
-                    <!-- 🔥 FIX: pointer-events: none для тексту -->
-                    <span id="date-placeholder" style="color: var(--secondary-text-color); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; pointer-events: none;">Обрати дату народження</span>
-                    <!-- 🔥 FIX: absolute inset-0 для інпуту -->
-                    <input type="date" id="birth-date" name="birth-date" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" required>
+                    
+                    <!-- Текст: pointer-events-none пропускає клік крізь себе -->
+                    <span id="date-placeholder" style="color: var(--secondary-text-color); pointer-events: none;">Обрати дату</span>
+                    
+                    <!-- Інпут: z-10 кладе його поверх всього, type="date", id="birth-date" -->
+                    <input type="date" id="birth-date" name="birth-date" class="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer z-10" required>
                 </div>
                 <p id="error-message" class="error-text">
                     Будь ласка, обери дату народження.
@@ -800,13 +799,16 @@
                 <!-- Time Input -->
                 <div>
                    <label for="birth-time" class="block text-xs uppercase tracking-widest font-semibold text-left ml-1 mb-2" style="color: var(--accent-color);">Час народження (Для розрахунку Долі)</label>
+                    <!-- 🔥 FIX STEP 4: Time Input як у робочому файлі + z-10 -->
                     <div class="input-field h-14 flex items-center justify-center relative hover:border-[#cda45e] transition-colors">
                         <svg class="w-5 h-5 absolute right-4 top-1/2 -translate-y-1/2" style="color: var(--secondary-text-color);" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
-                        <!-- 🔥 ДОДАНО: pointer-events: none (щоб клік проходив крізь текст) -->
+                        
+                        <!-- Текст: пропускає кліки -->
                         <span id="time-placeholder" style="color: var(--secondary-text-color); pointer-events: none;">Обери час</span>
-                        <!-- 🔥 ДОДАНО: z-10 (щоб інпут був поверх всього) -->
+                        
+                        <!-- Інпут: лежить зверху (z-10) -->
                         <input type="time" id="birth-time" name="birth-time" class="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer z-10">
                     </div>
                 </div>
