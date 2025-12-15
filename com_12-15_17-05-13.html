@@ -2561,21 +2561,25 @@
             }
 
             function updateTimePlaceholder() {
-                if (birthTimeInput.value === '') {
+                const val = birthTimeInput.value;
+                if (!val) {
                     timePlaceholder.innerText = 'Обери час';
                     timePlaceholder.style.color = 'var(--secondary-text-color)';
                 } else {
-                    timePlaceholder.innerText = birthTimeInput.value;
+                    timePlaceholder.innerText = val;
                     timePlaceholder.style.color = 'var(--primary-text-color)';
                 }
             }
 
-            // Listeners from attached file
+            // Додаємо слухачі подій (Listeners)
+            // Використовуємо 'input' та 'change' для гарантії спрацювання на всіх пристроях
             birthTimeInput.addEventListener('input', updateTimePlaceholder);
             birthTimeInput.addEventListener('change', updateTimePlaceholder);
-            birthTimeInput.addEventListener('blur', updateTimePlaceholder);
-            birthTimeInput.addEventListener('touchend', () => setTimeout(updateTimePlaceholder, 500));
             
+            // Додатково для мобільних браузерів (Safari iOS), де blur може бути тригером закриття пікера
+            birthTimeInput.addEventListener('blur', updateTimePlaceholder);
+            
+            // Ініціалізація при завантаженні
             updateTimePlaceholder();
 
             birthCityInput.addEventListener('input', () => {
