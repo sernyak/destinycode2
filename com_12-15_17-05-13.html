@@ -2564,25 +2564,23 @@
                 }
             }
 
-            // Логіка Плейсхолдера Часу (Fixed v2)
+            // Логіка Плейсхолдера Часу (Simple & Robust)
             function updateTimePlaceholder() {
-                const val = birthTimeInput.value;
-                // Додаткова перевірка: якщо val існує, примусово ставимо колір тексту
-                if (!val) {
+                // Якщо значення пусте - показуємо "Обери час", інакше - саме значення
+                if (!birthTimeInput.value) {
                     timePlaceholder.innerText = 'Обери час';
                     timePlaceholder.style.color = 'var(--secondary-text-color)';
                 } else {
-                    timePlaceholder.innerText = val;
+                    timePlaceholder.innerText = birthTimeInput.value;
                     timePlaceholder.style.color = 'var(--primary-text-color)';
                 }
             }
-            // Використовуємо 'input' (миттєво) і 'change' (після закриття пікера)
+            
+            // Слухаємо тільки надійні події, як у старому файлі
             birthTimeInput.addEventListener('input', updateTimePlaceholder);
             birthTimeInput.addEventListener('change', updateTimePlaceholder);
             
-            // 🔥 Фікс для iOS: іноді подія input не спрацьовує, тому ловимо blur (втрату фокусу)
-            birthTimeInput.addEventListener('blur', updateTimePlaceholder);
-            
+            // Запускаємо один раз при старті
             updateTimePlaceholder();
 
             birthCityInput.addEventListener('input', () => {
