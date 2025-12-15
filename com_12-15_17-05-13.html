@@ -804,7 +804,7 @@
                         <svg class="w-5 h-5 absolute right-4 top-1/2 -translate-y-1/2" style="color: var(--secondary-text-color);" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
-                        <span id="time-placeholder" style="color: var(--secondary-text-color);">Обери час</span>
+                        <span id="time-placeholder" style="color: var(--secondary-text-color); pointer-events: none;">Обери час</span>
                         <input type="time" id="birth-time" name="birth-time" class="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer">
                     </div>
                 </div>
@@ -2560,7 +2560,7 @@
                 }
             }
 
-            // Логіка Плейсхолдера Часу
+            // Логіка Плейсхолдера Часу (Fixed v2)
             function updateTimePlaceholder() {
                 if (birthTimeInput.value === '') {
                     timePlaceholder.innerText = 'Обери час';
@@ -2570,8 +2570,11 @@
                     timePlaceholder.style.color = 'var(--primary-text-color)';
                 }
             }
+            // Використовуємо тільки надійні події
             birthTimeInput.addEventListener('input', updateTimePlaceholder);
             birthTimeInput.addEventListener('change', updateTimePlaceholder);
+            
+            // Примусовий апдейт при завантаженні
             updateTimePlaceholder();
 
             birthCityInput.addEventListener('input', () => {
