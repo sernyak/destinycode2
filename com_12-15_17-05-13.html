@@ -1764,7 +1764,7 @@
                             const fullDegree = body.ChartPosition.Ecliptic.DecimalDegrees % 30;
                             const degree = Math.floor(fullDegree);
                             const minutesRaw = (fullDegree - degree) * 60;
-                            const minute = Math.floor(minutesRaw);
+                            const minutes = Math.floor(minutesRaw);
                             const seconds = Math.round((minutesRaw - minutes) * 60);
 
                             const label = key.charAt(0).toUpperCase() + key.slice(1);
