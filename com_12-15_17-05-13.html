@@ -798,20 +798,21 @@
             <div id="premium-form-container" class="w-full space-y-5 mt-6">
                 <!-- Time Input -->
                 <div>
-                   <label for="birth-time" class="block text-xs uppercase tracking-widest font-semibold text-left ml-1 mb-2" style="color: var(--accent-color);">Час народження (Для розрахунку Долі)</label>
-                    <!-- 🔥 FIX STEP 4: Time Input як у робочому файлі + z-10 -->
-                    <div class="input-field h-14 flex items-center justify-center relative hover:border-[#cda45e] transition-colors">
-                        <svg class="w-5 h-5 absolute right-4 top-1/2 -translate-y-1/2" style="color: var(--secondary-text-color);" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                        </svg>
-                        
-                        <!-- Текст: пропускає кліки -->
-                        <span id="time-placeholder" style="color: var(--secondary-text-color); pointer-events: none;">Обери час</span>
-                        
-                        <!-- Інпут: лежить зверху (z-10) -->
-                        <input type="time" id="birth-time" name="birth-time" class="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer z-10">
-                    </div>
+               <!-- Лейбл став меншим і uppercase, золотий -->
+               <label for="birth-time" class="block text-xs uppercase tracking-widest font-semibold text-left ml-1 mb-2" style="color: var(--accent-color);">Час народження (Для розрахунку Долі)</label>
+                
+                <div class="input-field h-14 flex items-center justify-center relative hover:border-[#cda45e] transition-colors">
+                    <svg class="w-5 h-5 absolute right-4 top-1/2 -translate-y-1/2" style="color: var(--secondary-text-color);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    
+                    <!-- ВАЖЛИВО: pointer-events: none дозволяє клікати "крізь" текст -->
+                    <span id="time-placeholder" style="color: var(--secondary-text-color); pointer-events: none;">Обери час</span>
+                    
+                    <!-- ВАЖЛИВО: z-10 ставить інпут ПОВЕРХ тексту -->
+                    <input type="time" id="birth-time" name="birth-time" class="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer z-10">
                 </div>
+            </div>
                 <!-- City Input -->
                 <div>
                     <label for="birth-city" class="block text-xs uppercase tracking-widest font-semibold text-left ml-1 mb-2" style="color: var(--accent-color);">Місто народження (Для карти зірок)</label>
@@ -2566,7 +2567,6 @@
 
             // Логіка Плейсхолдера Часу (Simple & Robust)
             function updateTimePlaceholder() {
-                // Якщо значення пусте - показуємо "Обери час", інакше - саме значення
                 if (!birthTimeInput.value) {
                     timePlaceholder.innerText = 'Обери час';
                     timePlaceholder.style.color = 'var(--secondary-text-color)';
@@ -2576,11 +2576,11 @@
                 }
             }
             
-            // Слухаємо тільки надійні події, як у старому файлі
+            // Слухачі подій (як у новому файлі)
             birthTimeInput.addEventListener('input', updateTimePlaceholder);
             birthTimeInput.addEventListener('change', updateTimePlaceholder);
             
-            // Запускаємо один раз при старті
+            // Ініціалізація
             updateTimePlaceholder();
 
             birthCityInput.addEventListener('input', () => {
